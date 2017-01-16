@@ -13,13 +13,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-package com.yoshio3;
+package com.yoshio3.services.motiondetectedoperation;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.yoshio3.Main;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;

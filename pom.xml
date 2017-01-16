@@ -23,12 +23,23 @@
             <artifactId>pi4j-core</artifactId>
             <version>1.0</version>
         </dependency>
-        
+        <dependency>
+            <groupId>de.sciss</groupId>
+            <artifactId>jrpicam</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+                
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
             <version>1.0.1</version>
         </dependency>        
+
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-storage</artifactId>
+            <version>3.1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

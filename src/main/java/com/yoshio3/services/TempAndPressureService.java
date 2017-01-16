@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.yoshio3;
+package com.yoshio3.services;
 
 import com.microsoft.azure.iothub.DeviceClient;
 import com.microsoft.azure.iothub.IotHubClientProtocol;
@@ -23,6 +23,7 @@ import com.microsoft.azure.iothub.Message;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
+import com.yoshio3.Main;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class TempAndPressureService {
 
     private static final String DEVICE_ID = "yoshio-raspi";
     private final static int BME280_ADDRESS = 0x76;
-    private static final String CONNECTION_STRING = "HostName=yoshio3-iot-hub.azure-devices.net;DeviceId=" + DEVICE_ID + ";SharedAccessKey=*******************************************=";
+    private static final String CONNECTION_STRING = "HostName=yoshio3-iot-hub.azure-devices.net;DeviceId=" + DEVICE_ID + ";SharedAccessKey=2GGgEBpDhgdps3YLhcNkzUnLOiZIe/Tt2hgebMj+UIg=";
     private volatile boolean flag;
 
     public TempAndPressureService() {
@@ -87,7 +88,6 @@ public class TempAndPressureService {
 
                     pushTempDataToAzureIoTHub(client, celsius, pressure, humidity);
                     Thread.sleep(20000);
-//                    Thread.sleep(1000*60*60);
                 }
                 bus.close();
             } catch (IOException | InterruptedException | URISyntaxException ex) {

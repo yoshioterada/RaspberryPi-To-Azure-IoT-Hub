@@ -15,9 +15,13 @@
  */
 package com.yoshio3;
 
+import com.yoshio3.services.TempAndPressureService;
+import com.yoshio3.services.MotionDetectOperation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,8 +36,8 @@ public class Main {
             TempAndPressureService tempSvc = new TempAndPressureService();
             tempSvc.execToGetTempAndPressure();
 
-            LEDService ledSvc = new LEDService();
-            ledSvc.blinkLED();
+            MotionDetectOperation motion = new MotionDetectOperation();
+            motion.enable();
 
             String line;
             System.out.println("Enter [exit] to stop the App.");
@@ -41,7 +45,8 @@ public class Main {
             while ((line = stdReader.readLine()) != null) {
                 if (line.equals("exit")) {
                     tempSvc.disable();
-                    ledSvc.disable();
+
+                    motion.disable();
                     System.exit(0);
                 }
             }
