@@ -20,8 +20,6 @@ import com.yoshio3.services.MotionDetectOperation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-    public static void main(String... args) {
+    public static void main(String... args) {        
         try (BufferedReader stdReader
                 = new BufferedReader(new InputStreamReader(System.in));) {
 
@@ -37,7 +35,7 @@ public class Main {
             tempSvc.execToGetTempAndPressure();
 
             MotionDetectOperation motion = new MotionDetectOperation();
-            motion.enable();
+            motion.detectMotion();
 
             String line;
             System.out.println("Enter [exit] to stop the App.");
@@ -45,8 +43,8 @@ public class Main {
             while ((line = stdReader.readLine()) != null) {
                 if (line.equals("exit")) {
                     tempSvc.disable();
+                    motion.shutdownMotionDetect();
 
-                    motion.disable();
                     System.exit(0);
                 }
             }

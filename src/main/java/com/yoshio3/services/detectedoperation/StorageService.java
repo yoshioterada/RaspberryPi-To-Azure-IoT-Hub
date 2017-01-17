@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.yoshio3.services.motiondetectedoperation;
+package com.yoshio3.services.detectedoperation;
 
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageException;
@@ -25,6 +25,7 @@ import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import com.microsoft.azure.storage.blob.ListBlobItem;
+import com.yoshio3.services.PropertyReaderService;
 import com.yoshio3.services.entities.BlobStorageEntity;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,7 +40,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import javax.annotation.PostConstruct;
 
 
 /**
@@ -49,25 +49,31 @@ import javax.annotation.PostConstruct;
 public class StorageService implements Serializable{
 
     private static final Logger LOGGER = Logger.getLogger(StorageService.class.getName());
+
     private final static String DEFAULT_ENDPOINT_PROTOCOL = "DefaultEndpointsProtocol=https;";
-    private final static String ACCOUNT_NAME = "AccountName=yoshiofileup;";
-    //The access keys to coonect Azure Storage
-    private final static String ACCOUNT_KEY = "AccountKey=***************************************************************+**********************==";
-        
-    public final static String CONTAINER_NAME_FOR_UPLOAD = "uploaded";
-    private final static String STORAGE_CONNECTION_STRING
-            = DEFAULT_ENDPOINT_PROTOCOL
-            + ACCOUNT_NAME
-            + ACCOUNT_KEY;
+    private final static String AZURE_STORAGE_ACCOUNT_NAME;
+    private final static String AZURE_STORAGE_ACCESS_ACCOUNT_KEY;
+    public final static String AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD;
+    private final static String STORAGE_CONNECTION_STRING;
 
     private CloudBlobClient blobClient;
+    
+    static{
+        AZURE_STORAGE_ACCOUNT_NAME = "AccountName=" + PropertyReaderService.getPropertyValue("AZURE_STORAGE_ACCOUNT_NAME") + ";";
+        AZURE_STORAGE_ACCESS_ACCOUNT_KEY = "AccountKey=" + PropertyReaderService.getPropertyValue("AZURE_STORAGE_ACCESS_ACCOUNT_KEY");
+        AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD = PropertyReaderService.getPropertyValue("AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD");
+        STORAGE_CONNECTION_STRING = DEFAULT_ENDPOINT_PROTOCOL
+            + AZURE_STORAGE_ACCOUNT_NAME
+            + AZURE_STORAGE_ACCESS_ACCOUNT_KEY;
+    }
+    
 
     //初期化
     public StorageService() {
         try {
             CloudStorageAccount storageAccount = CloudStorageAccount.parse(STORAGE_CONNECTION_STRING);
             blobClient = storageAccount.createCloudBlobClient();
-            createContainer(CONTAINER_NAME_FOR_UPLOAD);
+            createContainer(AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD);
         } catch (URISyntaxException | InvalidKeyException ex) {
             LOGGER.log(Level.SEVERE, "Invalid Account", ex);
         }
@@ -96,7 +102,7 @@ public class StorageService implements Serializable{
     public void uploadFile(byte[] file, String fileName) {
         CloudBlobContainer container;
         try {
-            container = blobClient.getContainerReference(CONTAINER_NAME_FOR_UPLOAD);
+            container = blobClient.getContainerReference(AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD);
             CloudBlockBlob blob = container.getBlockBlobReference(fileName);
 
             blob.upload(new ByteArrayInputStream(file), file.length);
@@ -109,7 +115,7 @@ public class StorageService implements Serializable{
     public List<BlobStorageEntity> getAllFiles() {
         List<BlobStorageEntity> entity = new ArrayList<>();
         try {
-            CloudBlobContainer container = blobClient.getContainerReference(CONTAINER_NAME_FOR_UPLOAD);
+            CloudBlobContainer container = blobClient.getContainerReference(AZURE_STORAGE_CONTAINER_NAME_FOR_UPLOAD);
 
             Iterable<ListBlobItem> items = container.listBlobs();
             Spliterator<ListBlobItem> spliterator = items.spliterator();

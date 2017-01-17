@@ -41,11 +41,21 @@ import javax.json.JsonObject;
  */
 public class TempAndPressureService {
 
-    private static final String DEVICE_ID = "yoshio-raspi";
+    private static final String DEVICE_ID_FOR_IOT_HUB ;
+    private static final String IOT_HUB_HOST_NAME ;
+    private static final String IOT_HUB_ACCESS_KEY;
+    private static final String CONNECTION_STRING ;    
+
     private final static int BME280_ADDRESS = 0x76;
-    private static final String CONNECTION_STRING = "HostName=yoshio3-iot-hub.azure-devices.net;DeviceId=" + DEVICE_ID + ";SharedAccessKey=2GGgEBpDhgdps3YLhcNkzUnLOiZIe/Tt2hgebMj+UIg=";
     private volatile boolean flag;
 
+    static{
+        IOT_HUB_HOST_NAME = PropertyReaderService.getPropertyValue("IOT_HUB_HOST_NAME");
+        IOT_HUB_ACCESS_KEY = PropertyReaderService.getPropertyValue("IOT_HUB_ACCESS_KEY");
+        DEVICE_ID_FOR_IOT_HUB = PropertyReaderService.getPropertyValue("DEVICE_ID_FOR_IOT_HUB");        
+        CONNECTION_STRING = "HostName=" + IOT_HUB_HOST_NAME + ";DeviceId=" + DEVICE_ID_FOR_IOT_HUB + ";SharedAccessKey=" + IOT_HUB_ACCESS_KEY;
+    }
+    
     public TempAndPressureService() {
         this.flag = true;
     }
@@ -87,7 +97,7 @@ public class TempAndPressureService {
                     double humidity = getHumidityValue(device, calibration, data);
 
                     pushTempDataToAzureIoTHub(client, celsius, pressure, humidity);
-                    Thread.sleep(20000);
+                    Thread.sleep(20000); //Every 20 sec, it send the data to IoT Hub.
                 }
                 bus.close();
             } catch (IOException | InterruptedException | URISyntaxException ex) {
