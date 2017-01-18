@@ -27,4 +27,9 @@ After get both access keys and subscription IDs, [Please Edit this property file
 
 ![Connect PIR Motion Sensor](https://c1.staticflickr.com/1/746/32232875872_776592c39b.jpg)
 
+Pleaase note :
+For PIR motion sensor, you need to adjst the default sensor setting. 
+1.I changed the [Retriggering setting](https://learn.adafruit.com/pir-passive-infrared-proximity-motion-sensor/testing-a-pir) from "Low" to "High" by change the jumper pin. Please refer to the [Testing a PIR](https://learn.adafruit.com/pir-passive-infrared-proximity-motion-sensor/testing-a-pir) of [https://learn.adafruit.com](https://learn.adafruit.com)?
+2. There is two yellow adjuster on the PIR Motion sensor. One is Sensitivity Adjust and the others is Time Delay Adjust. Please adjust by using yellow adjuster for your environment ?
+
 ![Connect Sensor to RasPi](https://c1.staticflickr.com/1/721/31540433514_2952ab6f01.jpg)
