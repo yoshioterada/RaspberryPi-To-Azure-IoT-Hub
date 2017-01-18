@@ -13,6 +13,13 @@ After uploaded the image, it send the URL to Cognitive Services as Face API and 
 
 ![Show Result](https://c1.staticflickr.com/1/541/32005905580_bf2a18799e_c.jpg)
 
+# How to run this Sample
+1. Need to create Azure IoT-Hub, Azure Storage on Azure.
+2. Need to get the access key for both above services.
+3. You need to create and get the Subscription ID of Cognitive Services.
+
+After get both access keys and subscription IDs, [Please Edit this property files?](https://github.com/yoshioterada/RaspberryPi-To-Azure-IoT-Hub/blob/master/src/main/resources/app-resources_ja_JP.properties "Please Edit this property?")
+
 # How to place the sensors on Raspberry Pi 2.
 ![Connect LED](https://c1.staticflickr.com/1/519/31540433654_972793cf39.jpg)
 
