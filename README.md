@@ -1,6 +1,6 @@
 # RaspberryPi Java IoT Sample with Microsoft Azure 
 
-![Connect Sensor to RasPi](https://c1.staticflickr.com/1/721/31540433514_2952ab6f01.jpg)
+![Confirmation of this demo](https://c1.staticflickr.com/1/381/31540920304_a8372eb32c_z.jpg)
 
 This Sample Appliaction get the data of celsius, pressure and humidity data from BME 280 sensor on Raspberry Pi(Raspberry Pi 2 Model B).
 After receved it, the application push the data to Azure IoT Hub.I also configure the Stream Analytics and PowerBI on Azure separatelly.As a result, we can confirm the data on PowerBI dashboard.
@@ -18,3 +18,4 @@ And also, I put the PIR motion sensor, camera and LED on RasPi. So if something 
 
 ![Connect PIR Motion Sensor](https://c1.staticflickr.com/1/746/32232875872_776592c39b.jpg)
 
+![Connect Sensor to RasPi](https://c1.staticflickr.com/1/721/31540433514_2952ab6f01.jpg)
