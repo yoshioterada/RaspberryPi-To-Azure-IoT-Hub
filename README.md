@@ -7,7 +7,9 @@ After receved it, the application push the data to Azure IoT Hub.I also configur
 
 ![Power BI Dashboard](https://c1.staticflickr.com/1/328/32233128852_67c067eb60.jpg)
 
-And also, I put the PIR motion sensor, camera and LED on RasPi. So if something had moved in front of motion sensor, it detected and turn on the LED and automatically take the phone of front of the camera. After take the photo, it upload the image to Azure Storage Blob. After uploaded the image, it send the URL to Cognitive Services as Face API and Emotion API. After received the result of analysis data, it showes the result to standard output as follow.
+And also, I put the PIR motion sensor, camera and LED on RasPi. So if something had moved in front of motion sensor, it detected and turn on the LED and automatically take the phone of front of the camera. After take the photo, it upload the image to Azure Storage Blob. 
+![Azure Storage Explorer](https://c1.staticflickr.com/1/613/32233420072_a1ed6889b1_c.jpg)
+After uploaded the image, it send the URL to Cognitive Services as Face API and Emotion API. After received the result of analysis data, it showes the result to standard output as follow.
 
 ![Show Result](https://c1.staticflickr.com/1/541/32005905580_bf2a18799e_c.jpg)
 
