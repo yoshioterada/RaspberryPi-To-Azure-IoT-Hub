@@ -13,23 +13,66 @@ After uploaded the image, it send the URL to Cognitive Services as Face API and 
 
 ![Show Result](https://c1.staticflickr.com/1/541/32005905580_bf2a18799e_c.jpg)
 
-# How to run this Sample
+# How to run this Sample Application
 1. Need to create Azure IoT-Hub, Azure Storage on Azure.
 2. Need to get the access key for both above services.
 3. You need to create and get the Subscription ID of Cognitive Services.
+4. Get the source code from GitHub
+5. After get both access keys and subscription IDs, [Please Edit the property files?](https://github.com/yoshioterada/RaspberryPi-To-Azure-IoT-Hub/blob/master/src/main/resources/app-resources_ja_JP.properties "Please Edit this property?")
+6. Build the Application
+7. Confirm the build binary  
+```bash
+$ cd RaspberryPi-To-Azure-IoT-Hub/target/
+```  
+```bash
+$ ls
+```  
+8. Copy the file to Raspberry Pi by scp
+```bash
+$ scp RaspberryPi-To-Azure-IoT-Hub-1.0-SNAPSHOT.jar  pi@192.168.1.100:/home/pi/
+``` 
+9. SSH Login to the Raspberry Pi  
+```bash
+$ ssh -l pi 192.168.1.100
+``` 
+10. Execute the Application on Raspberry Pi  
+```bash
+$ sudo java -jar RaspberryPi-To-Azure-IoT-Hub-1.0-SNAPSHOT.jar  
+```  
 
-After get both access keys and subscription IDs, [Please Edit this property files?](https://github.com/yoshioterada/RaspberryPi-To-Azure-IoT-Hub/blob/master/src/main/resources/app-resources_ja_JP.properties "Please Edit this property?")
 
 # How to place the sensors on Raspberry Pi 2.
 ## How to place the LED
 
 ![Connect LED](https://c1.staticflickr.com/1/519/31540433654_972793cf39.jpg)
 
+|LED | Raspberry Pi |
+|:-----------|:------------|
+|anode (+)|registor (Ω) |
+|cathode (-) | Grand |
+|registor|GPIO 1(pin12) |
+
+There is no need to connect "5.0 VDC Power (pin2)" in this time.
+
 ## How to place the BME 280
 ![Connect BME 280](https://c1.staticflickr.com/1/499/32232875822_3defde6773.jpg)
 
+|BME 280 | Raspberry Pi |
+|:-----------|:------------|
+|VIN|5.0 VDC Power (pin2) |
+|GND|Ground(pin6)|
+|SCK|GPIO 9 SCL1(I2C:pin5)|
+|SDO|Ground(pin6)|
+|SDI|GPIO 8 SDA1(I2C:pin3)|
+
 ## How to place the PIR Motion Sensor
 ![Connect PIR Motion Sensor](https://c1.staticflickr.com/1/746/32232875872_776592c39b.jpg)
+
+|PIR Motion Sensor | Raspberry Pi |
+|:-----------|:------------|
+|+DC Voltage|5.0 VDC Power (pin2) |
+|Output|GPIO 4(pin16)|
+|GND|Ground(pin6)|
 
 ###Pleaase note :
 For PIR motion sensor, you need to adjst the default sensor setting. 
