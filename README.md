@@ -28,16 +28,19 @@ $ cd RaspberryPi-To-Azure-IoT-Hub/target/
 ```bash
 $ ls
 ```
+{:start="8"}
 1. Copy the file to Raspberry Pi by scp
 
 ```bash
 $ scp RaspberryPi-To-Azure-IoT-Hub-1.0-SNAPSHOT.jar  pi@192.168.1.100:/home/pi/
 ```
+{:start="9"}
 1. SSH Login to the Raspberry Pi
 
 ```bash
 $ ssh -l pi 192.168.1.100
 ```
+{:start="10"}
 1. Execute the Application on Raspberry Pi
 
 ```bash
