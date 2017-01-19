@@ -20,22 +20,22 @@ After uploaded the image, it send the URL to Cognitive Services as Face API and 
 1. Get the source code from GitHub
 1. After get both access keys and subscription IDs, [Please Edit the property files?](https://github.com/yoshioterada/RaspberryPi-To-Azure-IoT-Hub/blob/master/src/main/resources/app-resources_ja_JP.properties "Please Edit this property?")
 1. Build the Application
-1. Confirm the build binary  
+1. Confirm the build binary
 ```bash
 $ cd RaspberryPi-To-Azure-IoT-Hub/target/
 ```  
 ```bash
 $ ls
 ```  
-1. Copy the file to Raspberry Pi by scp
+8. Copy the file to Raspberry Pi by scp
 ```bash
 $ scp RaspberryPi-To-Azure-IoT-Hub-1.0-SNAPSHOT.jar  pi@192.168.1.100:/home/pi/
 ``` 
-1. SSH Login to the Raspberry Pi  
+9. SSH Login to the Raspberry Pi
 ```bash
 $ ssh -l pi 192.168.1.100
 ``` 
-1. Execute the Application on Raspberry Pi  
+10. Execute the Application on Raspberry Pi
 ```bash
 $ sudo java -jar RaspberryPi-To-Azure-IoT-Hub-1.0-SNAPSHOT.jar  
 ```  
