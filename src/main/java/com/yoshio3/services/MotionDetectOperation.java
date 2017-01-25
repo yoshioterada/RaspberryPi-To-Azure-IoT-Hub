@@ -41,38 +41,38 @@ public class MotionDetectOperation {
     private final static GpioController GPIO = GpioFactory.getInstance();
     private final static GpioPinDigitalOutput LED_SENSOR = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_01, "GPIO_01", PinState.LOW);
     private final static GpioPinDigitalInput PIR_MOTION_SENSOR = GPIO.provisionDigitalInputPin(RaspiPin.GPIO_04, PinPullResistance.PULL_DOWN);
+    private final static Logger LOGGER = Logger.getLogger(MotionDetectOperation.class.getName());
 
     public void detectMotion() {
         ExecutorService newSingleThreadExecutor = Executors.newSingleThreadExecutor();
         newSingleThreadExecutor.submit(() -> {
             // create GPIO controller           
             LED_SENSOR.setShutdownOptions(true, PinState.LOW);
+            PIR_MOTION_SENSOR.setShutdownOptions(true);
 
-            //If motion sensor detect, it change the state to PinState.HIGH
+            //If motion sensor detect, it change the state to PinState.HIGH or LOW.
             PIR_MOTION_SENSOR.addListener((GpioPinListenerDigital) (GpioPinDigitalStateChangeEvent event) -> {
-                System.out.println("Motion State Changed : " + event.getState() + ":" + event.getState().getValue());
-                boolean onFlag = true;
                 if (event.getState() == PinState.HIGH) {
-                    CameraOperation cameraSvc = new CameraOperation();
                     try {
+                        LOGGER.log(Level.FINE, "MOTION SENSOR HIGH");
                         //LED TURN ON
                         ExecutorService insideThread = Executors.newSingleThreadExecutor();
                         insideThread.submit(() -> {
                             LED_SENSOR.high();
-                            LED_SENSOR.pulse(4000, true);
                         });
-                        
+
                         //Take Photo and upload image to Azure Storage
+                        CameraOperation cameraSvc = new CameraOperation();
                         String pictURL = cameraSvc.takePhotoAndUploadStorage();
 
                         //Analysis the image by Cognitive Service(Face&Emotion Detect)
                         FaceAndEmotionalDetectService face = new FaceAndEmotionalDetectService();
                         face.showFaceAndEmotionInfoAsync(pictURL);
-                        
                     } catch (InterruptedException | ExecutionException ex) {
-                        Logger.getLogger(MotionDetectOperation.class.getName()).log(Level.SEVERE, null, ex);
+                        LOGGER.log(Level.SEVERE, null, ex);
                     }
-                } else if (event.getState() == PinState.LOW) {
+                } else {
+                        LOGGER.log(Level.FINE, "MOTION SENSOR LOW");
                     LED_SENSOR.low();
                 }
             });
